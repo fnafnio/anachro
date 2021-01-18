@@ -19,7 +19,7 @@ anachro-icd = { version = "0.1.2", path = "../icd" }
 
 [dependencies.bbqueue]
 version = "0.4.10"
-features = ["enable-defmt"]
+# features = ["enable-defmt"]
 
 [dependencies.anachro-client]
 version = "0.1"

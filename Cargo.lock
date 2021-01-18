@@ -115,7 +115,7 @@ dependencies = [
  "defmt",
  "embedded-dma",
  "embedded-hal",
- "nrf52840-hal 0.11.1",
+ "nrf52840-hal 0.11.0",
 ]
 
 [[package]]
@@ -171,10 +171,10 @@ dependencies = [
 
 [[package]]
 name = "bbqueue"
-version = "0.4.10"
+version = "0.4.12"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "1aa12a71459d82fb84efd78f5f1b48b557634b5a5299e7f291260c6c7a2f94c5"
 dependencies = [
- "defmt",
- "embedded-dma",
  "generic-array 0.13.2",
 ]
 
@@ -358,7 +358,7 @@ dependencies = [
  "generic-array 0.13.2",
  "nrf52810-hal",
  "nrf52832-hal",
- "nrf52840-hal 0.11.1",
+ "nrf52840-hal 0.11.0",
  "postcard",
  "rtt-target",
  "serde",
@@ -547,11 +547,12 @@ dependencies = [
 [[package]]
 name = "nrf-hal-common"
 version = "0.11.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "299e8e5b67542ae134c93722f03f3137d349b3786a35dd2b02a87701ea779201"
 dependencies = [
  "cast",
  "cfg-if",
  "cortex-m",
- "embedded-dma",
  "embedded-hal",
  "fixed",
  "nb 1.0.0",
@@ -628,7 +629,9 @@ dependencies = [
 
 [[package]]
 name = "nrf52840-hal"
-version = "0.11.1"
+version = "0.11.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "87f7e01810b986e03c6cbe24dbcdd479a930e23e6b738540fe71c8b6389f475c"
 dependencies = [
  "embedded-hal",
  "nrf-hal-common 0.11.1",
