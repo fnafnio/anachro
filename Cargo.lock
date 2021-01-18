@@ -418,7 +418,7 @@ name = "groundhog-nrf52"
 version = "0.2.1"
 dependencies = [
  "cortex-m-rtic",
- "groundhog 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "groundhog 0.1.0",
  "nrf52840-hal 0.12.0",
 ]
 

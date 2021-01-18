@@ -13,6 +13,6 @@ categories = [
 license = "MIT OR Apache-2.0"
 
 [dependencies]
-groundhog = "0.1"
+groundhog = {version = "0.1", path = "../groundhog"}
 cortex-m-rtic = "0.5.5"
 nrf52840-hal = "0.12.0"

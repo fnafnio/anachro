@@ -98,7 +98,7 @@ mod sealed {
         const MAX_VAL: u64 = 0xFFFF_FFFF;
     }
 
-    #[cfg(feature = "u128")]
+    // #[cfg(feature = "u128")]
     impl Promote for u64 {
         type NextSize = u128;
         const MAX_VAL: u128 = 0xFFFF_FFFF_FFFF_FFFF;
@@ -112,7 +112,7 @@ mod sealed {
         }
     }
 
-    #[cfg(feature = "u128")]
+    // #[cfg(feature = "u128")]
     impl RollingSince for u64 {
         const MILLIS_PER_SECOND: u64 = 1_000;
         const MICROS_PER_SECOND: u64 = 1_000_000;
