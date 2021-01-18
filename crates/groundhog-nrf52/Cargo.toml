@@ -28,4 +28,4 @@ defmt-error = []
 
 
 [patch.crates-io]
-defmt = { version = "0.2.1", git = "https://github.com/knurling-rs/defmt", rev = 'a4400d8f3e58c89e97d9d10056df501d4434e6b6' }
+defmt = {git = "https://github.com/knurling-rs/defmt", rev = 'a4400d8f3e58c89e97d9d10056df501d4434e6b6' }

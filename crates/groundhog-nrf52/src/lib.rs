@@ -44,13 +44,12 @@ use nrf52840_hal::{
     pac::timer0::RegisterBlock as TimerRegBlock0,
     timer::Instance,
 };
-use nrf52840_hal::pac::TIMER0;
+
 use rtic::{Fraction, Monotonic};
 
-use core::{debug_assert, fmt::write, ptr::null_mut, sync::atomic::{AtomicPtr, AtomicU32, Ordering}};
+use core::{debug_assert, sync::atomic::{AtomicPtr, AtomicU32, Ordering}};
 
 static TIMER_PTR: AtomicPtr<TimerRegBlock0> = AtomicPtr::new(core::ptr::null_mut());
-// static STATE_PTR: AtomicPtr<GlobalRollingTimer64> = AtomicPtr::new(core::ptr::null_mut());
 
 static UPPER_COUNT: AtomicU32 = AtomicU32::new(0);
 
@@ -116,23 +115,11 @@ pub struct GlobalRollingTimer64 {
 }
 
 impl GlobalRollingTimer64 {
-    // cannot be made const, as some state is needed
-    // pub fn new() -> Self {
-    //     let mut grt = Self { upper: 0 };
-
-    //     // let old_ptr = STATE_PTR.swap(&mut grt, Ordering::SeqCst);
-    //     // debug_assert!(old_ptr == core::ptr::null_mut());
-
-    //     grt
-    // }
     pub const fn get_ref() -> Self{
         Self{}
     }
 
     pub fn init<T: Instance>(timer: T) {
-        // let grt = Self{ upper: 0};
-        // let old_ptr = STATE_PTR.swap(&grt as *const _ as *mut _, Ordering::SeqCst);
-        // debug_assert!(old_ptr == core::ptr::null_mut());
         UPPER_COUNT.store(0, Ordering::SeqCst);
         
         timer.set_periodic();
@@ -151,14 +138,12 @@ impl GlobalRollingTimer64 {
     }
 
     pub fn interrupt() {
-        // let mut grt = STATE_PTR.load(Ordering::SeqCst);
         let t0 = TIMER_PTR.load(Ordering::SeqCst);
 
         unsafe { (*t0).events_compare[0].reset() };
         // debug_assert!(grt != core::ptr::null_mut());
         // increment the upper part of the counter value
-        // unsafe { (*grt).upper += 0x000_0001_0000_0000 };
-        UPPER_COUNT.fetch_add(1, Ordering::AcqRel);
+        let _x =UPPER_COUNT.fetch_add(1, Ordering::AcqRel);
     }
 }
 
@@ -169,9 +154,7 @@ impl RollingTimer for GlobalRollingTimer64 {
     fn get_ticks(&self) -> u64 {
         if let Some(t0) = unsafe { TIMER_PTR.load(Ordering::SeqCst).as_ref() } {
             t0.tasks_capture[1].write(|w| unsafe { w.bits(1) });
-            let res = t0.cc[1].read().bits() as u64 | (UPPER_COUNT.load(Ordering::Acquire) as u64) << 32;
-            defmt::info!("get_ticks: {:?}", res);
-            res
+            t0.cc[1].read().bits() as u64 | (UPPER_COUNT.load(Ordering::Acquire) as u64) << 32
         } else {
             0
         }
@@ -187,12 +170,6 @@ impl Monotonic for GlobalRollingTimer64 {
         }
     }
     fn now() -> Self::Instant {
-        // let grt = STATE_PTR.load(Ordering::SeqCst);
-        // if grt == core::ptr::null_mut() {
-        //     0
-        // } else {
-        //     unsafe { (*grt).get_ticks() as i64 }
-        // }
         Self::get_ref().get_ticks() as i64
 
     }
